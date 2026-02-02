@@ -11,8 +11,8 @@
 <body>
     <div class="container">
         <header>
-            <h1>🛒</h1>
-            <h1>SHOPPING LIST</h1>
+            <!-- <h1>🛒</h1> -->
+            <h1><em>Shopping List</em></h1>
             <p class="subtitle">Track expenses & organize your shopping</p>
         </header>
 
@@ -25,8 +25,11 @@
                         <h2 class="card-title">📝 My Lists</h2>
                         <button class="new-list-btn"><span>+</span> New</button>
                     </div>
-                    <div class="lists-container"></div>
+                    <div class="lists-container">
+                        <!-- Lists will be added here -->
+                    </div>
                 </div>
+
                 <!-- Shopping List -->
                 <div class="card">
                     <div class="card-header">
@@ -81,12 +84,84 @@
                             <input type="number" id="priceInput" placeholder="0.00" step="0.01" min="0">
                         </div>
                     </div>
+
                     <button class="btn btn-primary" id="addItemBtn"><span>+</span> Add Item</button>
+                    
+                    <ul class="shopping-list" id="shoppingList">
+                        <!-- Items will be added here -->
+                    </ul>
+
+                    <div id="emptyState" class="empty-state">
+                        <div>📝</div>
+                        <p>No items yet</p>
+                        <p style="font-size: 1.1rem; margin-top: 5px;">Add items to get started!</p>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-success" id="markAllBtn">✓ Mark All</button>
+                        <button class="btn btn-danger" id="clearListBtn">🗑️ Clear</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">📊 Monthly Summary</h2>
+                    <div class="month-selector">
+                        <div class="month-nav">
+                            <button id="prevMonth">←</button>
+                        </div>
+                        <div class="month-display" id="currentMonthDisplay">January 2026</div>
+                        <div class="month-nav">
+                            <button id="nextMonth">→</button>
+                        </div>
+                    </div>
                 </div>
 
+                <div class="summary-stats">
+                    <div class="stat-card">
+                        <div class="stat-value primary" id="totalLists">0</div>
+                        <div class="stat-label">Lists</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value success" id="totalItems">0</div>
+                        <div class="stat-label">Items</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value warning" id="totalSpent">₹0.00</div>
+                        <div class="stat-label">Spent</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value danger" id="pendingItems">0</div>
+                        <div class="stat-label">Pending</div>
+                    </div>
+                </div>
 
+                <div class="monthly-breakdown">
+                    <div class="breakdown-header">Category Breakdown</div>
+                    <div id="categoryBreakdown">
+                        <!-- Category breakdown -->
+                    </div>
+                </div>
+
+                <div class="monthly-breakdown">
+                    <div class="breakdown-header">Recent Purchases</div>
+                    <div class="history-list" id="recentItems">
+                        <!-- Recent items -->
+                    </div>
+                </div>
+
+                <div class="btn-group" style="margin-top: 15px;">
+                    <button class="btn btn-secondary" id="exportMonthBtn">Export Excel</button>
+                    <button class="btn btn-danger" id="clearMonthBtn">Clear Month</button>
+                </div>
             </div>
         </div>
+
+        <footer>
+            <p>Shopping List App</p>
+        </footer>
     </div>
 
 </body>

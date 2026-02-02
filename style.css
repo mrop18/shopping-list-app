@@ -28,7 +28,7 @@ body {
 }
 
 .container {
-  max-width: 1400px;
+  max-width: 90vw;
   margin: 0 auto;
   padding: 0 15px;
 }
@@ -70,9 +70,10 @@ h1 {
 
 @media (min-width: 900px) {
   .app-container {
-    grid-template-columns: 1fr 380px;
+    grid-template-columns: auto 380px;
   }
 }
+
 .card {
   background: white;
   border-radius: var(--border-radius);
@@ -80,6 +81,7 @@ h1 {
   box-shadow: var(--box-shadow);
   position: relative;
   overflow: hidden;
+  border: 2px solid black;
 }
 .card::before {
   content: "";
@@ -159,7 +161,12 @@ h1 {
 }
 @media (min-width: 900px) {
   .input-group {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: auto 150px 80px;
+  }
+}
+@media (min-width: 1200px) {
+  .input-group {
+    grid-template-columns: auto auto 80px auto;
   }
 }
 .input-wrapper {
@@ -219,4 +226,162 @@ h1 {
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 4px 6px 5px rgba(0, 0, 0, 0.4);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--gray);
+  font-family: "Comic Neue", sans-serif;
+}
+
+.empty-state i {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+  opacity: 0.3;
+}
+
+.empty-state p {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.btn-group {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+@media (min-width: 600px) {
+  .btn-group {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, var(--danger), #e53935);
+  color: white;
+  font-weight: 800;
+}
+
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #4caf50, #388e3c);
+  color: white;
+  font-weight: 800;
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Monthly Summary */
+.month-selector {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.month-nav {
+  display: flex;
+  gap: 12px;
+}
+
+.month-nav button {
+  padding: 8px 14px;
+  border: 2px solid black;
+  background: #fff9c4;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: var(--transition);
+  font-size: 1rem;
+  font-family: "Comic Neue", sans-serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.month-nav button:hover {
+  background: #fffde7;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.month-display {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary-dark);
+  font-family: "Comic Neue", sans-serif;
+}
+.summary-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: white;
+  padding: 18px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+  border: 2px solid #ffc107;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 5px 0;
+  font-family: "Comic Neue", sans-serif;
+}
+
+.stat-value.primary {
+  color: var(--primary);
+}
+.stat-value.success {
+  color: #4caf50;
+}
+.stat-value.warning {
+  color: var(--warning);
+}
+.stat-value.danger {
+  color: var(--danger);
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: "Comic Neue", sans-serif;
+}
+
+.monthly-breakdown {
+  margin-top: 20px;
+}
+
+.breakdown-header {
+  font-weight: 800;
+  margin-bottom: 12px;
+  color: var(--dark);
+  font-size: 1.2rem;
+  font-family: "Comic Neue", sans-serif;
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+  color: white;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  padding-bottom: 20px;
+  font-family: "Comic Neue", sans-serif;
 }
