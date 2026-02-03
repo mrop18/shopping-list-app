@@ -5,14 +5,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping List App</title>
+    <meta name="theme-color" content="#FFC107">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Shopping List">
+    <meta name="description" content="Smart shopping list app with monthly expense tracking">
+    
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <!-- App Icons -->
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" href="icons/icon-192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="icons/icon-512.png" sizes="512x512">
+    
 </head>
 
 <body>
+    <!-- Install Banner -->
+    <div id="installBanner">
+        <div class="banner-content">
+            <div class="banner-icon">🛒</div>
+            <div class="banner-text">
+                <h3>Install Shopping List App</h3>
+                <p>Get quick access and use offline</p>
+            </div>
+        </div>
+        <div class="banner-buttons">
+            <button class="banner-btn install" id="installBtn">Install App</button>
+            <button class="banner-btn cancel" id="cancelInstallBtn">Not Now</button>
+        </div>
+    </div>
+    
     <div class="container">
         <header>
             <!-- <h1>🛒</h1> -->
-            <h1><em>Shopping List</em></h1>
+            <h1>
+                <img src="./images/shoppingcart.png" alt="">
+                <em>Shopping List</em>
+                <img src="./images/shoppingcart.png" alt="">
+            </h1>
             <p class="subtitle">Track expenses & organize your shopping</p>
         </header>
 
@@ -23,9 +55,9 @@
                 <div class="card lists-section">
                     <div class="lists-header">
                         <h2 class="card-title">📝 My Lists</h2>
-                        <button class="new-list-btn"><span>+</span> New</button>
+                        <button class="new-list-btn" id="newListBtn"><span>+</span> New</button>
                     </div>
-                    <div class="lists-container">
+                    <div class="lists-container" id="listsContainer">
                         <!-- Lists will be added here -->
                     </div>
                 </div>
@@ -86,7 +118,7 @@
                     </div>
 
                     <button class="btn btn-primary" id="addItemBtn"><span>+</span> Add Item</button>
-                    
+
                     <ul class="shopping-list" id="shoppingList">
                         <!-- Items will be added here -->
                     </ul>
@@ -162,6 +194,122 @@
         <footer>
             <p>Shopping List App</p>
         </footer>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="newListModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Create New List</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <form id="listForm">
+                <input type="hidden" id="listId">
+                <div class="form-group">
+                    <label for="listName">List Name *</label>
+                    <input type="text" id="listName" placeholder="e.g., Weekly Groceries" required>
+                </div>
+                <div class="form-group">
+                    <label for="listDescription">Description</label>
+                    <textarea id="listDescription" rows="2" placeholder="Optional notes..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="listMonth">Month</label>
+                        <select id="listMonth">
+                            <option value="0">January</option>
+                            <option value="1">February</option>
+                            <option value="2">March</option>
+                            <option value="3">April</option>
+                            <option value="4">May</option>
+                            <option value="5">June</option>
+                            <option value="6">July</option>
+                            <option value="7">August</option>
+                            <option value="8">September</option>
+                            <option value="9">October</option>
+                            <option value="10">November</option>
+                            <option value="11">December</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="listYear">Year</label>
+                        <select id="listYear"></select>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary" id="cancelListBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save List</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="editItemModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit Item</h3>
+                <button class="modal-close" id="closeEditModal">&times;</button>
+            </div>
+            <form id="itemForm">
+                <input type="hidden" id="editItemId">
+                <div class="form-group">
+                    <label for="editItemName">Item Name *</label>
+                    <input type="text" id="editItemName" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editCategory">Category</label>
+                        <select id="editCategory">
+                            <option value="groceries">Groceries</option>
+                            <option value="household">Household</option>
+                            <option value="personal">Personal</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editQuantity">Quantity</label>
+                        <input type="number" id="editQuantity" step="0.01" min="0.01" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="editUnit">Unit</label>
+                        <select id="editUnit" class="unit-select">
+                            <optgroup label="Weight">
+                                <option value="kg">kg</option>
+                                <option value="g">g</option>
+                                <option value="lb">lb</option>
+                                <option value="oz">oz</option>
+                            </optgroup>
+                            <optgroup label="Volume">
+                                <option value="L">L</option>
+                                <option value="mL">mL</option>
+                                <option value="gal">gal</option>
+                                <option value="fl oz">fl oz</option>
+                            </optgroup>
+                            <optgroup label="Count">
+                                <option value="pcs">pcs</option>
+                                <option value="dozen">dozen</option>
+                                <option value="pack">pack</option>
+                                <option value="box">box</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editPrice">Price (Optional)</label>
+                    <input type="number" id="editPrice" step="0.01" min="0" placeholder="0.00">
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary" id="cancelEditBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <span id="toastIcon"></span>
+        <span id="toastMessage"></span>
     </div>
 
 </body>
